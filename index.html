@@ -28,8 +28,8 @@
     }
     @keyframes backgroundPulse { 0% { opacity: 0.5; } 100% { opacity: 0.8; } }
     .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-
-    /* Cabecera y estilo del título */
+    
+    /* Cabecera y Título */
     .header {
       display: flex;
       flex-direction: column;
@@ -52,7 +52,7 @@
       50% { background-position: 100% 50%; }
     }
 
-    /* Datos del usuario e inputs unificados */
+    /* Datos de usuario e Inputs unificados */
     .user-info {
       position: absolute; top: 10px; right: 20px; text-align: right;
     }
@@ -95,7 +95,6 @@
       cursor: pointer;
       font-weight: bold;
     }
-    /* Error en el login: */
     #loginError { color: #ff6b6b; margin-bottom: 10px; }
 
     /* Tabs y sub-tabs */
@@ -148,7 +147,7 @@
     .stat-value { font-size: 1.5rem; font-weight: 700; color: #ffd700; }
     .stat-label { font-size: 0.9rem; opacity: 0.8; }
     
-    /* Sección Main: Roll, animación y botones (nota: el roll es gratis) */
+    /* Sección Main: Roll y botones (Roll gratis) */
     .roll-section {
       background: rgba(255,255,255,0.05);
       backdrop-filter: blur(15px);
@@ -212,7 +211,7 @@
     .btn-auto { background: linear-gradient(45deg, #4ecdc4, #44a08d); box-shadow: 0 8px 25px rgba(78,205,196,0.3); }
     .btn-quick { background: linear-gradient(45deg, #45b7d1, #2980b9); box-shadow: 0 8px 25px rgba(69,183,209,0.3); }
     
-    /* Secciones de Shop y Inventario */
+    /* Sección Shop */
     .shop-content, .inventory-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -230,7 +229,7 @@
     .shop-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 20px; color: #ffd700; }
     .item-price { color: #ffd700; font-weight: 700; }
     
-    /* Clases de rareza y nuevas raridades (“Quantum” es la más exclusiva) */
+    /* Clases de Rareza (se incluyen nuevas: Quantum, etc.) */
     .rarity-common { border-color: #95a5a6; color: #95a5a6; }
     .rarity-rare { border-color: #3498db; color: #3498db; }
     .rarity-epic { border-color: #9b59b6; color: #9b59b6; }
@@ -246,7 +245,7 @@
     .rarity-infinite { border-color: #ffeaa7; color: #ffeaa7; }
     .rarity-quantum { border-color: #ff9ff3; color: #ff9ff3; }
     
-    /* Animaciones: partículas y shake */
+    /* Animaciones */
     .particles {
       position: absolute; width: 100%; height: 100%; overflow: hidden;
     }
@@ -272,40 +271,6 @@
       .stats-bar { flex-direction: column; align-items: center; }
       .roll-buttons { flex-direction: column; align-items: center; }
       .shop-content { grid-template-columns: 1fr; }
-    }
-    
-    /* Estilos para el Admin Panel (solo visible para “Kai (owner)”) */
-    #adminPanel {
-      background: rgba(0,0,0,0.7);
-      padding: 20px;
-      border-radius: 10px;
-      margin: 20px auto;
-      max-width: 800px;
-      text-align: center;
-    }
-    #adminPanel h2 { margin-bottom: 10px; }
-    #adminPanel input[type="text"], #adminPanel input[type="number"] {
-      padding: 8px;
-      margin: 5px;
-      border-radius: 5px;
-      border: 2px solid #4ecdc4;
-      background: #2d1b69;
-      color: #fff;
-      outline: none;
-      transition: border 0.3s;
-    }
-    #adminPanel input[type="text"]:focus, #adminPanel input[type="number"]:focus {
-      border-color: #ff6b6b;
-    }
-    #adminPanel button {
-      padding: 8px 15px;
-      border: none;
-      border-radius: 5px;
-      background: #4ecdc4;
-      color: #fff;
-      margin: 5px;
-      cursor: pointer;
-      font-weight: bold;
     }
   </style>
 </head>
@@ -351,7 +316,7 @@
       </div>
     </div>
     
-    <!-- Información de Usuario -->
+    <!-- Información del usuario -->
     <div class="user-info" id="userInfo" style="display:none;">
       <div id="displayUsername"></div>
       <img id="displayAvatar" src="" alt="Avatar" />
@@ -368,9 +333,8 @@
       <button class="tab" onclick="switchTab('codes', event)">🔑 Códigos</button>
     </div>
     
-    <!-- Contenido de cada pestaña -->
-    
-    <!-- Pestaña Main -->
+    <!-- Contenido de pestañas -->
+    <!-- Main -->
     <div id="main-tab" class="tab-content active">
       <div class="main-content">
         <div class="roll-section">
@@ -379,13 +343,11 @@
             <div class="aura-rarity" id="auraRarity">Presiona Roll para comenzar</div>
           </div>
           <div class="roll-buttons">
-            <!-- Roll gratis: sin costo -->
+            <!-- Roll gratis -->
             <button class="btn btn-roll" onclick="roll()">🎲 Roll (Gratis)</button>
-            <!-- Botón de Auto Roll (mantiene su función, gratis por roll individual) -->
             <button class="btn btn-auto" onclick="toggleAutoRoll()">⚡ Auto Roll</button>
-            <!-- Quick Roll original (10 rolls, pero costará 500 monedas) -->
+            <!-- Quick Rolls con precio -->
             <button class="btn btn-quick" onclick="quickRoll()">💨 Quick Roll (10 rolls - 500)</button>
-            <!-- Botones nuevos para más rolls -->
             <button class="btn btn-quick" onclick="superQuickRoll()">🚀 Super Quick (20 rolls - 1,000)</button>
             <button class="btn btn-quick" onclick="ultraQuickRoll()">🔥 Ultra Quick (50 rolls - 3,000)</button>
           </div>
@@ -397,236 +359,174 @@
       </div>
     </div>
     
-    <!-- Pestaña Shop -->
+    <!-- Shop -->
     <div id="shop-tab" class="tab-content">
       <div class="shop-content">
-        <!-- Sección de Amuletos Permanentes (boosters de suerte) -->
+        <!-- Amuletos Permanentes -->
         <div class="shop-section">
           <h2 class="shop-title">🍀 Amuletos Permanentes</h2>
-          <!-- Se incluyen aquí 10 items (algunos repetidos con variaciones en precio y efecto) -->
+          <!-- 10 items con variaciones -->
+          <!-- Item 1 -->
           <div class="shop-item">
             <div class="item-info"><h3>Amuleto Básico</h3><p>+0.1x Suerte</p></div>
-            <div>
-              <div class="item-price">1,000</div>
-              <button class="btn" onclick="buyLuckUpgrade(0.1, 1000)">Comprar</button>
-            </div>
+            <div><div class="item-price">1,000</div><button class="btn" onclick="buyLuckUpgrade(0.1, 1000)">Comprar</button></div>
           </div>
+          <!-- Item 2 -->
           <div class="shop-item">
             <div class="item-info"><h3>Trébol Dorado</h3><p>+0.5x Suerte</p></div>
-            <div><div class="item-price">5,000</div>
-              <button class="btn" onclick="buyLuckUpgrade(0.5, 5000)">Comprar</button>
-            </div>
+            <div><div class="item-price">5,000</div><button class="btn" onclick="buyLuckUpgrade(0.5, 5000)">Comprar</button></div>
           </div>
+          <!-- Item 3 -->
           <div class="shop-item">
             <div class="item-info"><h3>Piedra de la Fortuna</h3><p>+1.0x Suerte</p></div>
-            <div><div class="item-price">10,000</div>
-              <button class="btn" onclick="buyLuckUpgrade(1.0, 10000)">Comprar</button>
-            </div>
+            <div><div class="item-price">10,000</div><button class="btn" onclick="buyLuckUpgrade(1.0, 10000)">Comprar</button></div>
           </div>
+          <!-- Item 4 -->
           <div class="shop-item">
             <div class="item-info"><h3>Amuleto Legendario</h3><p>+2.0x Suerte</p></div>
-            <div><div class="item-price">50,000</div>
-              <button class="btn" onclick="buyLuckUpgrade(2.0, 50000)">Comprar</button>
-            </div>
+            <div><div class="item-price">50,000</div><button class="btn" onclick="buyLuckUpgrade(2.0, 50000)">Comprar</button></div>
           </div>
+          <!-- Item 5 -->
           <div class="shop-item">
             <div class="item-info"><h3>Amuleto Quantum</h3><p>+5.0x Suerte</p></div>
-            <div><div class="item-price">150,000</div>
-              <button class="btn" onclick="buyLuckUpgrade(5.0, 150000)">Comprar</button>
-            </div>
+            <div><div class="item-price">150,000</div><button class="btn" onclick="buyLuckUpgrade(5.0, 150000)">Comprar</button></div>
           </div>
-          <!-- Añadidos 5 más con variaciones -->
+          <!-- Items 6 a 10 -->
           <div class="shop-item">
             <div class="item-info"><h3>Antorcha de la Suerte</h3><p>+0.2x Suerte</p></div>
-            <div><div class="item-price">1,500</div>
-              <button class="btn" onclick="buyLuckUpgrade(0.2, 1500)">Comprar</button>
-            </div>
+            <div><div class="item-price">1,500</div><button class="btn" onclick="buyLuckUpgrade(0.2, 1500)">Comprar</button></div>
           </div>
           <div class="shop-item">
             <div class="item-info"><h3>Medallón Afortunado</h3><p>+0.8x Suerte</p></div>
-            <div><div class="item-price">7,000</div>
-              <button class="btn" onclick="buyLuckUpgrade(0.8, 7000)">Comprar</button>
-            </div>
+            <div><div class="item-price">7,000</div><button class="btn" onclick="buyLuckUpgrade(0.8, 7000)">Comprar</button></div>
           </div>
           <div class="shop-item">
             <div class="item-info"><h3>Talismán de Fuego</h3><p>+1.5x Suerte</p></div>
-            <div><div class="item-price">20,000</div>
-              <button class="btn" onclick="buyLuckUpgrade(1.5, 20000)">Comprar</button>
-            </div>
+            <div><div class="item-price">20,000</div><button class="btn" onclick="buyLuckUpgrade(1.5, 20000)">Comprar</button></div>
           </div>
           <div class="shop-item">
             <div class="item-info"><h3>Rune Afortunada</h3><p>+0.3x Suerte</p></div>
-            <div><div class="item-price">2,500</div>
-              <button class="btn" onclick="buyLuckUpgrade(0.3, 2500)">Comprar</button>
-            </div>
+            <div><div class="item-price">2,500</div><button class="btn" onclick="buyLuckUpgrade(0.3, 2500)">Comprar</button></div>
           </div>
           <div class="shop-item">
             <div class="item-info"><h3>Icono Divino</h3><p>+3.0x Suerte</p></div>
-            <div><div class="item-price">100,000</div>
-              <button class="btn" onclick="buyLuckUpgrade(3.0, 100000)">Comprar</button>
-            </div>
+            <div><div class="item-price">100,000</div><button class="btn" onclick="buyLuckUpgrade(3.0, 100000)">Comprar</button></div>
           </div>
           <div class="shop-item">
             <div class="item-info"><h3>Emblema Celestial</h3><p>+4.0x Suerte</p></div>
-            <div><div class="item-price">200,000</div>
-              <button class="btn" onclick="buyLuckUpgrade(4.0, 200000)">Comprar</button>
-            </div>
+            <div><div class="item-price">200,000</div><button class="btn" onclick="buyLuckUpgrade(4.0, 200000)">Comprar</button></div>
           </div>
         </div>
         
-        <!-- Sección de Pociones Temporales (mínimo 10 items) -->
+        <!-- Pociones Temporales (10 items) -->
         <div class="shop-section">
           <h2 class="shop-title">🧪 Pociones Temporales</h2>
+          <!-- Items 1 a 10 -->
           <div class="shop-item">
             <div class="item-info"><h3>Poción de Suerte</h3><p>+2.0x Suerte por 1 minuto</p></div>
-            <div><div class="item-price">500</div>
-              <button class="btn" onclick="buyPotion(2,60000,500)">Comprar</button>
-            </div>
+            <div><div class="item-price">500</div><button class="btn" onclick="buyPotion(2,60000,500)">Comprar</button></div>
           </div>
           <div class="shop-item">
-            <div class="item-info"><h3>Elixir Divino</h3><p>+5.0x Suerte por 30 segundos</p></div>
-            <div><div class="item-price">2,000</div>
-              <button class="btn" onclick="buyPotion(5,30000,2000)">Comprar</button>
-            </div>
+            <div class="item-info"><h3>Elixir Divino</h3><p>+5.0x Suerte por 30 seg</p></div>
+            <div><div class="item-price">2,000</div><button class="btn" onclick="buyPotion(5,30000,2000)">Comprar</button></div>
           </div>
           <div class="shop-item">
-            <div class="item-info"><h3>Bendición Celestial</h3><p>+7.0x Suerte por 20 segundos</p></div>
-            <div><div class="item-price">4,000</div>
-              <button class="btn" onclick="buyPotion(7,20000,4000)">Comprar</button>
-            </div>
-          </div>
-          <!-- Otros 7 items -->
-          <div class="shop-item">
-            <div class="item-info"><h3>Infusión Mística</h3><p>+3.0x Suerte por 45 segundos</p></div>
-            <div><div class="item-price">2,500</div>
-              <button class="btn" onclick="buyPotion(3,45000,2500)">Comprar</button>
-            </div>
+            <div class="item-info"><h3>Bendición Celestial</h3><p>+7.0x Suerte por 20 seg</p></div>
+            <div><div class="item-price">4,000</div><button class="btn" onclick="buyPotion(7,20000,4000)">Comprar</button></div>
           </div>
           <div class="shop-item">
-            <div class="item-info"><h3>Brebaje Arcano</h3><p>+4.0x Suerte por 50 segundos</p></div>
-            <div><div class="item-price">3,000</div>
-              <button class="btn" onclick="buyPotion(4,50000,3000)">Comprar</button>
-            </div>
+            <div class="item-info"><h3>Infusión Mística</h3><p>+3.0x Suerte por 45 seg</p></div>
+            <div><div class="item-price">2,500</div><button class="btn" onclick="buyPotion(3,45000,2500)">Comprar</button></div>
           </div>
           <div class="shop-item">
-            <div class="item-info"><h3>Elixir de Éxtasis</h3><p>+6.0x Suerte por 40 segundos</p></div>
-            <div><div class="item-price">3,500</div>
-              <button class="btn" onclick="buyPotion(6,40000,3500)">Comprar</button>
-            </div>
+            <div class="item-info"><h3>Brebaje Arcano</h3><p>+4.0x Suerte por 50 seg</p></div>
+            <div><div class="item-price">3,000</div><button class="btn" onclick="buyPotion(4,50000,3000)">Comprar</button></div>
           </div>
           <div class="shop-item">
-            <div class="item-info"><h3>Tónico Sobrenatural</h3><p>+8.0x Suerte por 25 segundos</p></div>
-            <div><div class="item-price">4,500</div>
-              <button class="btn" onclick="buyPotion(8,25000,4500)">Comprar</button>
-            </div>
+            <div class="item-info"><h3>Elixir de Éxtasis</h3><p>+6.0x Suerte por 40 seg</p></div>
+            <div><div class="item-price">3,500</div><button class="btn" onclick="buyPotion(6,40000,3500)">Comprar</button></div>
           </div>
           <div class="shop-item">
-            <div class="item-info"><h3>Extracto Etéreo</h3><p>+4.5x Suerte por 55 segundos</p></div>
-            <div><div class="item-price">3,800</div>
-              <button class="btn" onclick="buyPotion(4.5,55000,3800)">Comprar</button>
-            </div>
+            <div class="item-info"><h3>Tónico Sobrenatural</h3><p>+8.0x Suerte por 25 seg</p></div>
+            <div><div class="item-price">4,500</div><button class="btn" onclick="buyPotion(8,25000,4500)">Comprar</button></div>
           </div>
           <div class="shop-item">
-            <div class="item-info"><h3>Solución Mágica</h3><p>+3.5x Suerte por 70 segundos</p></div>
-            <div><div class="item-price">3,200</div>
-              <button class="btn" onclick="buyPotion(3.5,70000,3200)">Comprar</button>
-            </div>
+            <div class="item-info"><h3>Extracto Etéreo</h3><p>+4.5x Suerte por 55 seg</p></div>
+            <div><div class="item-price">3,800</div><button class="btn" onclick="buyPotion(4.5,55000,3800)">Comprar</button></div>
           </div>
           <div class="shop-item">
-            <div class="item-info"><h3>Concentrado Ancestral</h3><p>+5.5x Suerte por 35 segundos</p></div>
-            <div><div class="item-price">2,800</div>
-              <button class="btn" onclick="buyPotion(5.5,35000,2800)">Comprar</button>
-            </div>
+            <div class="item-info"><h3>Solución Mágica</h3><p>+3.5x Suerte por 70 seg</p></div>
+            <div><div class="item-price">3,200</div><button class="btn" onclick="buyPotion(3.5,70000,3200)">Comprar</button></div>
           </div>
           <div class="shop-item">
-            <div class="item-info"><h3>Agua Bendita</h3><p>+2.5x Suerte por 80 segundos</p></div>
-            <div><div class="item-price">2,200</div>
-              <button class="btn" onclick="buyPotion(2.5,80000,2200)">Comprar</button>
-            </div>
+            <div class="item-info"><h3>Concentrado Ancestral</h3><p>+5.5x Suerte por 35 seg</p></div>
+            <div><div class="item-price">2,800</div><button class="btn" onclick="buyPotion(5.5,35000,2800)">Comprar</button></div>
+          </div>
+          <div class="shop-item">
+            <div class="item-info"><h3>Agua Bendita</h3><p>+2.5x Suerte por 80 seg</p></div>
+            <div><div class="item-price">2,200</div><button class="btn" onclick="buyPotion(2.5,80000,2200)">Comprar</button></div>
           </div>
         </div>
         
-        <!-- Sección de Pociones de un solo uso (categoría diferente) -->
+        <!-- Pociones de un solo uso -->
         <div class="shop-section">
           <h2 class="shop-title">🔥 Pociones de un Solo Uso</h2>
-          <!-- Al menos 10 items -->
+          <!-- 10 items -->
           <div class="shop-item">
             <div class="item-info"><h3>Poción OP Instantánea</h3><p>+10.0x Suerte por 15 seg</p></div>
-            <div><div class="item-price">3,000</div>
-              <button class="btn" onclick="buyOneUsePotion(10,15000,3000)">Comprar</button>
-            </div>
+            <div><div class="item-price">3,000</div><button class="btn" onclick="buyOneUsePotion(10,15000,3000)">Comprar</button></div>
           </div>
           <div class="shop-item">
             <div class="item-info"><h3>Poción de Fulgor</h3><p>+12.0x Suerte por 10 seg</p></div>
-            <div><div class="item-price">6,000</div>
-              <button class="btn" onclick="buyOneUsePotion(12,10000,6000)">Comprar</button>
-            </div>
+            <div><div class="item-price">6,000</div><button class="btn" onclick="buyOneUsePotion(12,10000,6000)">Comprar</button></div>
           </div>
           <div class="shop-item">
             <div class="item-info"><h3>Poción Relámpago</h3><p>+8.0x Suerte por 20 seg</p></div>
-            <div><div class="item-price">4,500</div>
-              <button class="btn" onclick="buyOneUsePotion(8,20000,4500)">Comprar</button>
-            </div>
+            <div><div class="item-price">4,500</div><button class="btn" onclick="buyOneUsePotion(8,20000,4500)">Comprar</button></div>
           </div>
           <div class="shop-item">
             <div class="item-info"><h3>Poción Fulminante</h3><p>+15.0x Suerte por 8 seg</p></div>
-            <div><div class="item-price">7,500</div>
-              <button class="btn" onclick="buyOneUsePotion(15,8000,7500)">Comprar</button>
-            </div>
+            <div><div class="item-price">7,500</div><button class="btn" onclick="buyOneUsePotion(15,8000,7500)">Comprar</button></div>
           </div>
           <div class="shop-item">
             <div class="item-info"><h3>Poción Efímera</h3><p>+7.5x Suerte por 18 seg</p></div>
-            <div><div class="item-price">3,800</div>
-              <button class="btn" onclick="buyOneUsePotion(7.5,18000,3800)">Comprar</button>
-            </div>
+            <div><div class="item-price">3,800</div><button class="btn" onclick="buyOneUsePotion(7.5,18000,3800)">Comprar</button></div>
           </div>
           <div class="shop-item">
             <div class="item-info"><h3>Poción Ígnea</h3><p>+11.0x Suerte por 12 seg</p></div>
-            <div><div class="item-price">5,500</div>
-              <button class="btn" onclick="buyOneUsePotion(11,12000,5500)">Comprar</button>
-            </div>
+            <div><div class="item-price">5,500</div><button class="btn" onclick="buyOneUsePotion(11,12000,5500)">Comprar</button></div>
           </div>
           <div class="shop-item">
             <div class="item-info"><h3>Poción de Quimeras</h3><p>+9.0x Suerte por 16 seg</p></div>
-            <div><div class="item-price">4,200</div>
-              <button class="btn" onclick="buyOneUsePotion(9,16000,4200)">Comprar</button>
-            </div>
+            <div><div class="item-price">4,200</div><button class="btn" onclick="buyOneUsePotion(9,16000,4200)">Comprar</button></div>
           </div>
           <div class="shop-item">
             <div class="item-info"><h3>Poción Abrasadora</h3><p>+13.0x Suerte por 14 seg</p></div>
-            <div><div class="item-price">6,200</div>
-              <button class="btn" onclick="buyOneUsePotion(13,14000,6200)">Comprar</button>
-            </div>
+            <div><div class="item-price">6,200</div><button class="btn" onclick="buyOneUsePotion(13,14000,6200)">Comprar</button></div>
           </div>
           <div class="shop-item">
             <div class="item-info"><h3>Poción Inmediata</h3><p>+10.5x Suerte por 17 seg</p></div>
-            <div><div class="item-price">5,000</div>
-              <button class="btn" onclick="buyOneUsePotion(10.5,17000,5000)">Comprar</button>
-            </div>
+            <div><div class="item-price">5,000</div><button class="btn" onclick="buyOneUsePotion(10.5,17000,5000)">Comprar</button></div>
           </div>
           <div class="shop-item">
             <div class="item-info"><h3>Poción Explosiva</h3><p>+14.0x Suerte por 9 seg</p></div>
-            <div><div class="item-price">7,000</div>
-              <button class="btn" onclick="buyOneUsePotion(14,9000,7000)">Comprar</button>
-            </div>
+            <div><div class="item-price">7,000</div><button class="btn" onclick="buyOneUsePotion(14,9000,7000)">Comprar</button></div>
           </div>
         </div>
       </div>
     </div>
     
-    <!-- Pestaña Inventario -->
+    <!-- Inventario -->
     <div id="inventory-tab" class="tab-content">
       <div class="shop-section">
         <h2 class="shop-title">📦 Inventario de Auras</h2>
         <div class="inventory-grid" id="inventoryGrid">
-          <p style="text-align:center; opacity:0.7; grid-column:1/-1;">
-            Tu inventario está vacío. ¡Haz algunos rolls para conseguir auras!
-          </p>
+          <p style="text-align:center; opacity:0.7; grid-column:1/-1;">Tu inventario está vacío. ¡Haz algunos rolls para conseguir auras!</p>
         </div>
       </div>
     </div>
     
-    <!-- Pestaña Prestigio -->
+    <!-- Prestigio -->
     <div id="prestige-tab" class="tab-content">
       <h2>Prestigio</h2>
       <p>Prestigio acumulado: <span id="prestigeDisplay">0</span></p>
@@ -634,13 +534,13 @@
       <button class="btn" onclick="prestigeGame()">Prestigiar (Reinicia tu progreso a cambio de bono de suerte)</button>
     </div>
     
-    <!-- Pestaña Logros -->
+    <!-- Logros -->
     <div id="achievements-tab" class="tab-content">
       <h2>🎖️ Logros</h2>
       <div id="achievementsList" style="display:flex; flex-wrap:wrap; gap:20px; justify-content:center;"></div>
     </div>
     
-    <!-- Pestaña Leaderboard -->
+    <!-- Leaderboard -->
     <div id="leaderboard-tab" class="tab-content">
       <h2>📊 Leaderboard</h2>
       <div class="leaderboard-tabs">
@@ -651,28 +551,15 @@
       <div id="leaderboardContent"></div>
     </div>
     
-    <!-- Pestaña Códigos -->
+    <!-- Códigos -->
     <div id="codes-tab" class="tab-content">
       <h2>🔑 Canjear Código</h2>
-      <input type="text" id="codeInput" placeholder="Ingresa tu código" />
+      <p>Usa los siguientes códigos (con usos infinitos):</p>
+      <p><strong>RESETALL</strong> – Reinicia TODOS los datos (borrará todo).</p>
+      <p><strong>RESETUSER: [tu usuario]</strong> – Reinicia tus propios datos.</p>
+      <input type="text" id="codeInput" placeholder="Ingresa un código" />
       <button class="btn" onclick="redeemCode()">Canjear</button>
       <div id="codeMessage"></div>
-    </div>
-    
-    <!-- Admin Panel (solo para Kai (owner)) -->
-    <div id="adminPanel" style="display:none;">
-      <h2>Admin Panel</h2>
-      <div>
-        <input type="number" id="adminAddCoins" placeholder="Cantidad de monedas" />
-        <button onclick="adminAddCoins()">Add Coins</button>
-      </div>
-      <div>
-        <input type="text" id="adminResetUser" placeholder="Nombre del usuario" />
-        <button onclick="adminResetUserData()">Reset Player Data</button>
-      </div>
-      <div>
-        <button onclick="adminResetAllData()">Reset All Data</button>
-      </div>
     </div>
     
   </div>
@@ -752,16 +639,11 @@
             document.getElementById("loginModal").style.display = "none";
             document.getElementById("userInfo").style.display = "block";
             document.getElementById("displayUsername").textContent = gameState.username;
-            if(gameState.avatar) {
-              document.getElementById("displayAvatar").src = gameState.avatar;
-            }
+            if(gameState.avatar) { document.getElementById("displayAvatar").src = gameState.avatar; }
           }
         } catch(e) { console.error("Error al cargar el save."); }
       }
-      // Si el usuario es "Kai (owner)", se muestra el Admin Panel
-      if(gameState.username === "Kai (owner)") {
-        document.getElementById("adminPanel").style.display = "block";
-      }
+      // Si el usuario es "Kai (owner)", podrías mostrar funciones adicionales (no implementadas aquí)
     }
     setInterval(saveGame, 30000);
 
@@ -772,17 +654,13 @@
       const username = document.getElementById("usernameInput").value.trim();
       const errorDiv = document.getElementById("loginError");
       if(!username) { errorDiv.textContent = "Ingresa un nombre de usuario."; return; }
-      
-      // Verificar si el nombre ya existe (almacenando en "kaiRngRegisteredUsers")
       let registered = JSON.parse(localStorage.getItem("kaiRngRegisteredUsers") || "[]");
       if(registered.includes(username)) {
         errorDiv.textContent = "El nombre ya está en uso. Elige otro.";
         return;
       }
-      // Agregar el nombre a la lista de registrados
       registered.push(username);
       localStorage.setItem("kaiRngRegisteredUsers", JSON.stringify(registered));
-      
       gameState.username = username;
       const avatarFile = document.getElementById("avatarInput").files[0];
       if(avatarFile) {
@@ -793,9 +671,7 @@
           finalizeLogin();
         };
         reader.readAsDataURL(avatarFile);
-      } else {
-        finalizeLogin();
-      }
+      } else { finalizeLogin(); }
     }
     function finalizeLogin() {
       document.getElementById("loginModal").style.display = "none";
@@ -805,7 +681,7 @@
     }
 
     ////////////////////////////
-    // Actualizar UI (estadísticas)
+    // Actualización de UI
     ////////////////////////////
     function updateUI() {
       document.getElementById("coins").textContent = gameState.coins.toLocaleString();
@@ -819,37 +695,27 @@
     function getTotalLuck() { return gameState.luck; }
 
     ////////////////////////////
-    // Definición de Auras y Sistema RNG
+    // Auras y Sistema RNG
     ////////////////////////////
     let auras = [
-      // Common
       {name: "Brisa Común", rarity: "Common", minValue: 1, maxValue: 100, color: "#95a5a6", chance: 40},
       {name: "Luz Básica", rarity: "Common", minValue: 1, maxValue: 100, color: "#95a5a6", chance: 35},
-      // Rare  
       {name: "Viento Azul", rarity: "Rare", minValue: 101, maxValue: 1000, color: "#3498db", chance: 15},
       {name: "Chispa Eléctrica", rarity: "Rare", minValue: 101, maxValue: 1000, color: "#3498db", chance: 12},
-      // Epic
       {name: "Llama Púrpura", rarity: "Epic", minValue: 1001, maxValue: 10000, color: "#9b59b6", chance: 8},
       {name: "Cristal Místico", rarity: "Epic", minValue: 1001, maxValue: 10000, color: "#9b59b6", chance: 6},
-      // Legendary
       {name: "Oro Radiante", rarity: "Legendary", minValue: 10001, maxValue: 100000, color: "#f39c12", chance: 3},
       {name: "Fénix Dorado", rarity: "Legendary", minValue: 10001, maxValue: 100000, color: "#f39c12", chance: 2},
-      // Mythic
       {name: "Dragón Carmesí", rarity: "Mythic", minValue: 100001, maxValue: 1000000, color: "#e74c3c", chance: 1},
       {name: "Tormenta Eterna", rarity: "Mythic", minValue: 100001, maxValue: 1000000, color: "#e74c3c", chance: 0.8},
-      // Divine
       {name: "Aurora Divina", rarity: "Divine", minValue: 1000001, maxValue: 100000000, color: "#fd79a8", chance: 0.5},
       {name: "Estrella Celestial", rarity: "Divine", minValue: 1000001, maxValue: 100000000, color: "#fd79a8", chance: 0.3},
-      // Celestial
       {name: "Galaxia Infinita", rarity: "Celestial", minValue: 100000001, maxValue: 1000000000, color: "#00cec9", chance: 0.1},
       {name: "Cosmos Eterno", rarity: "Celestial", minValue: 100000001, maxValue: 1000000000, color: "#00cec9", chance: 0.08},
-      // Transcendent
       {name: "Omnipresencia", rarity: "Transcendent", minValue: 1000000001, maxValue: 10000000000, color: "#6c5ce7", chance: 0.05},
       {name: "Realidad Absoluta", rarity: "Transcendent", minValue: 1000000001, maxValue: 10000000000, color: "#6c5ce7", chance: 0.03},
-      // Omnipotent
       {name: "DIOS SUPREMO", rarity: "Omnipotent", minValue: 10000000001, maxValue: 100000000000, color: "#ffd700", chance: 0.01},
       {name: "CREADOR UNIVERSAL", rarity: "Omnipotent", minValue: 10000000001, maxValue: 100000000000, color: "#ffd700", chance: 0.005},
-      // Nuevas rarezas: Ethereal y Fabled y Ascended, Infinite y Quantum
       {name: "Esencia Etérea", rarity: "Ethereal", minValue: 100000000001, maxValue: 1000000000000, color: "#a29bfe", chance: 0.002},
       {name: "Luz Etérea", rarity: "Ethereal", minValue: 100000000001, maxValue: 1000000000000, color: "#a29bfe", chance: 0.0015},
       {name: "Susurro Fabuloso", rarity: "Fabled", minValue: 1000000000001, maxValue: 10000000000000, color: "#fd79a8", chance: 0.001},
@@ -862,7 +728,7 @@
       {name: "Singularidad Quantum", rarity: "Quantum", minValue: 1000000000000001, maxValue: 10000000000000000, color: "#ff9ff3", chance: 0.00003}
     ];
 
-    // En el roll gratis ya no se resta monedas
+    // Roll Gratis: no se descuenta monedas
     function roll() {
       gameState.totalRolls++;
       playSound(400, 0.2);
@@ -876,7 +742,7 @@
       }, 1000);
     }
     
-    // La recompensa en monedas se reduce (valor/100 en vez de /10)
+    // Recompensa en monedas: valor/100
     function performRoll() {
       const weightedAuras = auras.map(aura => ({ ...aura, adjustedChance: aura.chance * getTotalLuck() }));
       const totalWeight = weightedAuras.reduce((sum, aura) => sum + aura.adjustedChance, 0);
@@ -917,7 +783,7 @@
       updateGlobalLeaderboard();
     }
     
-    // Animaciones de partículas y efectos especiales
+    // Animaciones
     function triggerBasicAnimation(aura) { createParticles(20, aura.color); }
     function triggerAnimation(aura) {
       createParticles(50, aura.color);
@@ -929,12 +795,11 @@
     function triggerMegaAnimation(aura) {
       createParticles(100, aura.color);
       const overlay = document.getElementById("animationOverlay");
-      overlay.innerHTML = `
-        <div class="particles" id="particles"></div>
-        <div class="mega-animation" style="color: ${aura.color}; text-shadow: 0 0 50px ${aura.color};">
-          ✨ ${aura.name.toUpperCase()} ✨
-          <div style="font-size: 2rem; margin-top: 20px;">MEGA RARE!</div>
-        </div>`;
+      overlay.innerHTML = `<div class="particles" id="particles"></div>
+                           <div class="mega-animation" style="color: ${aura.color}; text-shadow: 0 0 50px ${aura.color};">
+                             ✨ ${aura.name.toUpperCase()} ✨
+                             <div style="font-size: 2rem; margin-top: 20px;">MEGA RARE!</div>
+                           </div>`;
       overlay.style.display = "block";
       overlay.style.background = `radial-gradient(circle, ${aura.color}30, transparent 70%)`;
       setTimeout(() => { overlay.style.display = "none"; }, 3000);
@@ -943,13 +808,12 @@
     function triggerUltraAnimation(aura) {
       createParticles(200, aura.color);
       const overlay = document.getElementById("animationOverlay");
-      overlay.innerHTML = `
-        <div class="particles" id="particles"></div>
-        <div class="mega-animation ultra-animation" style="color: ${aura.color}; text-shadow: 0 0 80px ${aura.color};">
-          🌟 ${aura.name.toUpperCase()} 🌟
-          <div style="font-size: 2.5rem; margin-top: 20px;">ULTRA LEGENDARY!</div>
-          <div style="font-size: 1.5rem; margin-top: 10px;">Valor: ${aura.value.toLocaleString()}</div>
-        </div>`;
+      overlay.innerHTML = `<div class="particles" id="particles"></div>
+                           <div class="mega-animation ultra-animation" style="color: ${aura.color}; text-shadow: 0 0 80px ${aura.color};">
+                             🌟 ${aura.name.toUpperCase()} 🌟
+                             <div style="font-size: 2.5rem; margin-top: 20px;">ULTRA LEGENDARY!</div>
+                             <div style="font-size: 1.5rem; margin-top: 10px;">Valor: ${aura.value.toLocaleString()}</div>
+                           </div>`;
       overlay.classList.add("ultra-animation");
       overlay.style.display = "block";
       setTimeout(() => { overlay.style.display = "none"; overlay.classList.remove("ultra-animation"); }, 3000);
@@ -959,14 +823,13 @@
     function triggerSpecialAnimation(aura) {
       createParticles(500, aura.color);
       const overlay = document.getElementById("animationOverlay");
-      overlay.innerHTML = `
-        <div class="particles" id="particles"></div>
-        <div class="mega-animation special-animation" style="color: #fff; text-shadow: 0 0 100px ${aura.color}, 0 0 200px #fff;">
-          ⭐ ${aura.name.toUpperCase()} ⭐
-          <div style="font-size: 3rem; margin-top: 20px;">GODLIKE!</div>
-          <div style="font-size: 2rem; margin-top: 15px;">Valor: ${aura.value.toLocaleString()}</div>
-          <div style="font-size: 1.2rem; margin-top: 10px;">¡IMPOSIBLE!</div>
-        </div>`;
+      overlay.innerHTML = `<div class="particles" id="particles"></div>
+                           <div class="mega-animation special-animation" style="color: #fff; text-shadow: 0 0 100px ${aura.color}, 0 0 200px #fff;">
+                             ⭐ ${aura.name.toUpperCase()} ⭐
+                             <div style="font-size: 3rem; margin-top: 20px;">GODLIKE!</div>
+                             <div style="font-size: 2rem; margin-top: 15px;">Valor: ${aura.value.toLocaleString()}</div>
+                             <div style="font-size: 1.2rem; margin-top: 10px;">¡IMPOSIBLE!</div>
+                           </div>`;
       overlay.classList.add("special-animation");
       overlay.style.display = "block";
       setTimeout(() => { overlay.style.display = "none"; overlay.classList.remove("special-animation"); }, 4000);
@@ -975,7 +838,7 @@
     }
     function createParticles(count, color) {
       const particles = document.getElementById("particles");
-      for(let i = 0; i < count; i++) {
+      for(let i = 0; i < count; i++){
         const particle = document.createElement("div");
         particle.className = "particle";
         particle.style.left = Math.random() * 100 + "%";
@@ -987,7 +850,7 @@
       }
     }
     
-    // Quick Roll: 10 rolls (cost 500 monedas)
+    // Quick Roll (10 rolls - 500)
     function quickRoll() {
       if(gameState.coins < 500) { playSound(200,0.3); alert("¡No tienes suficientes monedas para Quick Roll!"); return; }
       gameState.coins -= 500;
@@ -1005,7 +868,7 @@
       }, 1500);
     }
     
-    // Super Quick Roll: 20 rolls (cost 1,000 monedas)
+    // Super Quick Roll (20 rolls - 1,000)
     function superQuickRoll() {
       if(gameState.coins < 1000) { playSound(200,0.3); alert("¡No tienes suficientes monedas para Super Quick Roll!"); return; }
       gameState.coins -= 1000;
@@ -1022,8 +885,8 @@
         alert(`Super Quick Roll: Mejor aura: ${bestResult.name} (${bestResult.value.toLocaleString()})`);
       }, 1500);
     }
-
-    // Ultra Quick Roll: 50 rolls (cost 3,000 monedas)
+    
+    // Ultra Quick Roll (50 rolls - 3,000)
     function ultraQuickRoll() {
       if(gameState.coins < 3000) { playSound(200,0.3); alert("¡No tienes suficientes monedas para Ultra Quick Roll!"); return; }
       gameState.coins -= 3000;
@@ -1043,7 +906,7 @@
     
     // Auto Roll
     function toggleAutoRoll() {
-      if(gameState.autoRollActive) { stopAutoRoll(); }
+      if(gameState.autoRollActive){ stopAutoRoll(); }
       else { startAutoRoll(); }
     }
     function startAutoRoll() {
@@ -1052,61 +915,237 @@
       document.getElementById("autoRollControls").style.display = "block";
       playSound(500,0.2);
       gameState.autoRollInterval = setInterval(() => {
-        if(gameState.coins >= 50) { roll(); }
+        if(gameState.coins >= 50){ roll(); }
         else { stopAutoRoll(); alert("¡Auto Roll detenido!"); }
       }, 1000);
     }
     function stopAutoRoll() {
       gameState.autoRollActive = false;
       document.getElementById("autoRollControls").style.display = "none";
-      if(gameState.autoRollInterval) { clearInterval(gameState.autoRollInterval); gameState.autoRollInterval = null; }
+      if(gameState.autoRollInterval){ clearInterval(gameState.autoRollInterval); gameState.autoRollInterval = null; }
       playSound(300,0.3);
     }
     
-    // Tienda: Boosters y Pociones ya implementadas en los botones de cada item.
-    // Las funciones buyLuckUpgrade, buyPotion y buyOneUsePotion se usan en Shop.
-    function buyLuckUpgrade(increase, cost) {
-      if(gameState.coins >= cost) {
-        gameState.coins -= cost;
-        gameState.luck += increase;
-        playSound(600,0.5,"triangle");
-        updateUI();
-        alert(`¡Amuleto comprado! +${increase}x suerte permanente.`);
-      } else { playSound(200,0.3); alert("¡No tienes suficientes monedas!"); }
-    }
-    function buyPotion(multiplier, duration, cost) {
-      if(gameState.coins >= cost) {
-        gameState.coins -= cost;
-        gameState.potionActive = true;
-        gameState.potionMultiplier = multiplier;
-        gameState.potionEndTime = Date.now() + duration;
-        playSound(700,0.8,"sine");
-        updateUI();
-        alert(`¡Poción activada! +${multiplier}x suerte por ${duration/1000} segundos.`);
-        const potionInterval = setInterval(() => {
-          if(Date.now() >= gameState.potionEndTime) {
-            clearInterval(potionInterval);
-            gameState.potionActive = false;
-            gameState.potionMultiplier = 0;
-            updateUI();
-            alert("¡Efecto de poción terminado!");
-          } else { updateUI(); }
-        }, 1000);
-      } else { playSound(200,0.3); alert("¡No tienes suficientes monedas!"); }
-    }
-    function buyOneUsePotion(multiplier, duration, cost) {
-      if(gameState.coins >= cost) {
-        gameState.coins -= cost;
-        gameState.oneUsePotions = (gameState.oneUsePotions || 0) + 1;
-        playSound(750,0.6,"triangle");
-        updateUI();
-        alert(`¡Poción de un solo uso comprada! Úsala para +${multiplier}x suerte por ${duration/1000} segundos.`);
-      } else { playSound(200,0.3); alert("¡No tienes suficientes monedas!"); }
-    }
-    
-    // Prestigio: requiere 10,000 monedas
+    // Prestigio
     function prestigeGame() {
       if(gameState.coins < 10000) { alert("Necesitas al menos 10,000 monedas para prestigiar."); return; }
       if(confirm("Prestigiar reiniciará tu progreso (excepto tu cuenta) a cambio de un bono permanente en suerte. ¿Continuar?")) {
         gameState.prestige++;
         gameState.luck += 0.2;
+        gameState.coins = 1000;
+        gameState.totalRolls = 0;
+        gameState.auras = [];
+        gameState.bestAura = 0;
+        updateUI();
+        updateInventory();
+        alert(`¡Prestigio completado! Prestigios: ${gameState.prestige} y +0.2 suerte permanente.`);
+      }
+    }
+    
+    // Inventario
+    function updateInventory() {
+      const inventoryGrid = document.getElementById("inventoryGrid");
+      if(gameState.auras.length === 0){
+        inventoryGrid.innerHTML = '<p style="text-align:center; opacity:0.7; grid-column:1/-1;">Tu inventario está vacío. ¡Haz algunos rolls para conseguir auras!</p>';
+        return;
+      }
+      const grouped = {};
+      gameState.auras.forEach(aura => {
+        const key = aura.name + "-" + aura.rarity;
+        if(!grouped[key]) { grouped[key] = { ...aura, count: 0, totalValue: 0, bestValue: 0 }; }
+        grouped[key].count++;
+        grouped[key].totalValue += aura.value;
+        grouped[key].bestValue = Math.max(grouped[key].bestValue, aura.value);
+      });
+      const sorted = Object.values(grouped).sort((a,b) => b.bestValue - a.bestValue);
+      inventoryGrid.innerHTML = sorted.map(a => `
+        <div class="inventory-item rarity-${a.rarity.toLowerCase()}">
+          <h3>${a.name}</h3>
+          <p>${a.rarity}</p>
+          <p>Cantidad: ${a.count}</p>
+          <p>Mejor: ${a.bestValue.toLocaleString()}</p>
+          <p>Total: ${a.totalValue.toLocaleString()}</p>
+        </div>
+      `).join('');
+    }
+    
+    // Logros
+    function updateAchievements() {
+      const container = document.getElementById("achievementsList");
+      container.innerHTML = "";
+      achievementData.forEach(ach => {
+        const unlocked = ach.condition();
+        const claimed = gameState.achievementsClaimed[ach.id] || false;
+        const card = document.createElement("div");
+        card.style.border = "2px solid #4ecdc4";
+        card.style.borderRadius = "10px";
+        card.style.padding = "15px";
+        card.style.width = "200px";
+        card.style.textAlign = "center";
+        card.style.background = unlocked ? "#4ecdc4" : "#333";
+        card.style.opacity = unlocked ? "1" : "0.5";
+        card.innerHTML = `<h3>${ach.name}</h3>
+                          <p>${ach.reward}</p>
+                          <p>${unlocked ? "Desbloqueado" : "Bloqueado"}</p>`;
+        if(unlocked && !claimed){
+          const claimBtn = document.createElement("button");
+          claimBtn.className = "btn";
+          claimBtn.textContent = "Reclamar";
+          claimBtn.onclick = () => claimAchievement(ach.id);
+          card.appendChild(claimBtn);
+        } else if(claimed) {
+          card.innerHTML += "<p>✔️ Reclamado</p>";
+        }
+        container.appendChild(card);
+      });
+    }
+    function claimAchievement(id) {
+      if(!gameState.achievementsClaimed[id]){
+        gameState.achievementsClaimed[id] = true;
+        gameState.coins += 1000;
+        updateUI();
+        updateAchievements();
+        alert("¡Logro reclamado! +1000 monedas.");
+      }
+    }
+    
+    // Leaderboard
+    function updateGlobalLeaderboard() {
+      if(!gameState.username) return;
+      let leaderboard = JSON.parse(localStorage.getItem("auraGameLeaderboard") || "[]");
+      let found = leaderboard.find(u => u.username === gameState.username);
+      if(found){
+        if(gameState.bestAura > found.bestAura){
+          found.bestAura = gameState.bestAura;
+        }
+        if(gameState.prestige > found.prestige){
+          found.prestige = gameState.prestige;
+        }
+        if(gameState.totalRolls > found.totalRolls){
+          found.totalRolls = gameState.totalRolls;
+        }
+      } else {
+        leaderboard.push({
+          username: gameState.username,
+          avatar: gameState.avatar,
+          bestAura: gameState.bestAura,
+          prestige: gameState.prestige,
+          totalRolls: gameState.totalRolls
+        });
+      }
+      localStorage.setItem("auraGameLeaderboard", JSON.stringify(leaderboard));
+      const activeLTab = document.querySelector(".lboard-tab.active");
+      if(activeLTab){
+        switchLeaderboard(activeLTab.getAttribute("data-type"), null);
+      }
+    }
+    function switchLeaderboard(type, event) {
+      if(event){
+        document.querySelectorAll(".lboard-tab").forEach(btn => btn.classList.remove("active"));
+        event.target.classList.add("active");
+      }
+      const leaderboard = JSON.parse(localStorage.getItem("auraGameLeaderboard") || "[]");
+      let sorted = [];
+      if(type === "rare"){
+        sorted = leaderboard.sort((a,b) => b.bestAura - a.bestAura);
+      } else if(type === "prestige"){
+        sorted = leaderboard.sort((a,b) => b.prestige - a.prestige);
+      } else if(type === "rolls"){
+        sorted = leaderboard.sort((a,b) => b.totalRolls - a.totalRolls);
+      }
+      const content = document.getElementById("leaderboardContent");
+      if(sorted.length === 0){
+        content.innerHTML = "<p>No hay datos aún.</p>"; return;
+      }
+      let html = "<table style='width:100%; color:#fff;'><tr><th>Usuario</th>";
+      if(type === "rare"){ html += "<th>Mejor Aura</th>"; }
+      if(type === "prestige"){ html += "<th>Prestigios</th>"; }
+      if(type === "rolls"){ html += "<th>Rolls</th>"; }
+      html += "</tr>";
+      sorted.forEach(u => {
+        html += `<tr>
+                    <td style="display:flex; align-items:center; gap:10px;">
+                      ${u.avatar ? `<img src="${u.avatar}" style="width:30px; height:30px; border-radius:50%;" />` : ""}
+                      ${u.username}
+                    </td>`;
+        if(type === "rare"){ html += `<td>${u.bestAura.toLocaleString()}</td>`; }
+        if(type === "prestige"){ html += `<td>${u.prestige}</td>`; }
+        if(type === "rolls"){ html += `<td>${u.totalRolls}</td>`; }
+        html += "</tr>";
+      });
+      html += "</table>";
+      content.innerHTML = html;
+    }
+    
+    ////////////////////////////
+    // Reset mediante Códigos. Los códigos RESETALL y RESETUSER: [nombre] tienen usos infinitos.
+    ////////////////////////////
+    function redeemCode() {
+      const codeInputVal = document.getElementById("codeInput").value.trim();
+      const messageDiv = document.getElementById("codeMessage");
+      // Código para resetear TODOS los datos
+      if(codeInputVal === "RESETALL") {
+        if(confirm("¿Estás seguro de reiniciar TODOS los datos? Esta acción borrará todo.")) {
+          localStorage.clear();
+          location.reload();
+        }
+        return;
+      }
+      // Código para resetear la data del usuario (debe coincidir con el usuario logueado)
+      if(codeInputVal.startsWith("RESETUSER:")) {
+        let targetUser = codeInputVal.substring("RESETUSER:".length).trim();
+        if(targetUser === "") {
+          messageDiv.textContent = "Debes escribir el nombre de usuario después de RESETUSER:";
+          return;
+        }
+        if(targetUser !== gameState.username) {
+          messageDiv.textContent = "No puedes resetear la data de otro usuario.";
+          return;
+        }
+        if(confirm("¿Estás seguro de resetear tus datos?")) {
+          resetMyData();
+          messageDiv.textContent = "Tus datos han sido reiniciados.";
+        }
+        return;
+      }
+      messageDiv.textContent = "Código inválido.";
+    }
+    function resetMyData() {
+      gameState.coins = 1000;
+      gameState.luck = 1.0;
+      gameState.totalRolls = 0;
+      gameState.auras = [];
+      gameState.prestige = 0;
+      gameState.bestAura = 0;
+      updateUI();
+      updateInventory();
+      saveGame();
+    }
+    
+    ////////////////////////////
+    // Cambio entre pestañas
+    ////////////////////////////
+    function switchTab(tab, event) {
+      playSound(400,0.1);
+      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove("active"));
+      document.querySelectorAll('.tab').forEach(btn => btn.classList.remove("active"));
+      document.getElementById(tab + "-tab").classList.add("active");
+      event.target.classList.add("active");
+    }
+    
+    ////////////////////////////
+    // Agregar click sound a botones y pestañas
+    ////////////////////////////
+    document.querySelectorAll('.btn, .tab').forEach(btn => {
+      btn.addEventListener("click", () => { playSound(350,0.1); });
+    });
+    
+    window.addEventListener("beforeunload", saveGame);
+    
+    loadGame();
+    updateUI();
+    updateInventory();
+    updateAchievements();
+  </script>
+</body>
+</html>
