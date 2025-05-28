@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aura RNG Game - Extended</title>
+  <title>Kai Rng Game</title>
   <style>
-    /* Estilos generales y fuentes */
+    /* Fuentes y reset básico */
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
-    
     * { margin: 0; padding: 0; box-sizing: border-box; }
+    
     body {
       font-family: 'Orbitron', monospace;
       background: linear-gradient(135deg, #0f0f23, #1a1a3a, #2d1b69);
@@ -17,21 +17,22 @@
       min-height: 100vh;
       position: relative;
     }
+    
     .background-animation {
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
       z-index: -1;
-      background: radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3), transparent 50%),
-                  radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3), transparent 50%),
-                  radial-gradient(circle at 40% 80%, rgba(119, 198, 255, 0.3), transparent 50%);
+      background: radial-gradient(circle at 20% 50%, rgba(120,119,198,0.3), transparent 50%),
+                  radial-gradient(circle at 80% 20%, rgba(255,119,198,0.3), transparent 50%),
+                  radial-gradient(circle at 40% 80%, rgba(119,198,255,0.3), transparent 50%);
       animation: backgroundPulse 4s ease-in-out infinite alternate;
     }
     @keyframes backgroundPulse { 0% { opacity: 0.5; } 100% { opacity: 0.8; } }
-
+    
     .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
     
-    /* Cabecera y botones de Reset y datos de usuario */
+    /* CABECERA, USUARIO Y RESET */
     .header {
       display: flex;
       flex-direction: column;
@@ -47,99 +48,52 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       animation: gradientShift 3s ease infinite;
-      text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+      text-shadow: 0 0 30px rgba(255,255,255,0.5);
     }
     @keyframes gradientShift {
-      0%,100% { background-position: 0% 50%; }
+      0%, 100% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
     }
-    .user-info { position: absolute; top: 10px; right: 20px; text-align: right; }
-    .user-info img { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; }
-    .reset-btn { position: absolute; top: 10px; left: 20px; background: #f44336; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; }
-    
-    /* Tabs */
-    .tabs {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 30px;
-      gap: 10px;
-      flex-wrap: wrap;
+    .user-info {
+      position: absolute; top: 10px; right: 20px; text-align: right;
     }
-    .tab {
-      background: rgba(255, 255, 255, 0.1);
-      border: 2px solid rgba(255, 255, 255, 0.2);
-      color: #fff;
-      padding: 15px 30px;
-      border-radius: 25px;
-      cursor: pointer;
-      font-weight: 700;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(10px);
+    .user-info img {
+      width: 50px; height: 50px; border-radius: 50%; object-fit: cover;
     }
-    .tab:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(255,255,255,0.2); }
-    .tab.active { background: linear-gradient(45deg, #ff6b6b, #4ecdc4); border-color: #fff; box-shadow: 0 0 30px rgba(255,255,255,0.3); }
-    .tab-content { display: none; }
-    .tab-content.active { display: block; text-align: center; }
-    
-    /* Sección principal del juego (Main) */
-    .stats-bar {
-      display: flex; justify-content: center; gap: 30px; margin: 20px 0; flex-wrap: wrap;
-    }
-    .stat {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 15px;
-      padding: 15px 25px;
-      text-align: center;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-    }
-    .stat-value { font-size: 1.5rem; font-weight: 700; color: #ffd700; }
-    .stat-label { font-size: 0.9rem; opacity: 0.8; }
-    
-    .roll-section {
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(15px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 25px;
-      padding: 40px;
-      margin-bottom: 30px;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-    }
-    .roll-animation {
-      width: 300px; height: 200px; margin: 30px auto;
-      background: rgba(0, 0, 0, 0.3);
-      border-radius: 20px;
-      display: flex; flex-direction: column; justify-content: center; align-items: center;
-      border: 2px solid rgba(255,255,255,0.2);
-      position: relative; overflow: hidden;
-    }
-    .aura-name { font-size: 1.8rem; font-weight: 700; margin-bottom: 10px; text-shadow: 0 0 20px currentColor; }
-    .aura-rarity { font-size: 1rem; opacity: 0.9; padding: 5px 15px; border-radius: 15px; background: rgba(255, 255, 255, 0.1); }
-    
-    .roll-buttons { display: flex; justify-content: center; gap: 20px; margin: 30px 0; flex-wrap: wrap; }
-    .btn {
-      background: linear-gradient(45deg, #667eea, #764ba2);
+    /* Botón reset mejorado */
+    .reset-btn {
+      position: absolute; top: 10px; left: 20px;
+      background: linear-gradient(45deg, #e74c3c, #c0392b);
       border: none;
-      color: white;
-      padding: 15px 30px;
-      border-radius: 25px;
+      padding: 10px 20px;
+      border-radius: 8px;
       cursor: pointer;
-      font-weight: 700;
-      font-size: 1rem;
-      transition: all 0.3s ease;
-      box-shadow: 0 8px 25px rgba(102,126,234,0.3);
-      position: relative; overflow: hidden;
+      color: #fff;
+      font-weight: bold;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
-    .btn:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(102,126,234,0.5); }
-    .btn:active { transform: translateY(0); }
+    .reset-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 10px #e74c3c;
+    }
     
-    /* Botones específicos */
-    .btn-roll { background: linear-gradient(45deg, #ff6b6b, #ee5a24); box-shadow: 0 8px 25px rgba(255,107,107,0.3); }
-    .btn-auto { background: linear-gradient(45deg, #4ecdc4, #44a08d); box-shadow: 0 8px 25px rgba(78,205,196,0.3); }
-    .btn-quick { background: linear-gradient(45deg, #45b7d1, #2980b9); box-shadow: 0 8px 25px rgba(69,183,209,0.3); }
+    /* Entradas del modal */
+    input[type="text"], input[type="file"] {
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: 2px solid #4ecdc4;
+      background: #2d1b69;
+      color: #fff;
+      width: 90%;
+      outline: none;
+      transition: border 0.3s;
+    }
+    input[type="text"]:focus, input[type="file"]:focus {
+      border-color: #ff6b6b;
+    }
     
-    /* Estilos para pantallas modales, por ejemplo login */
+    /* Modal de login */
     .modal {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0,0,0,0.8);
@@ -154,10 +108,127 @@
       max-width: 400px;
       text-align: center;
     }
-    .modal input { padding: 10px; margin: 10px 0; border-radius: 5px; width: 80%; }
-    .modal button { padding: 10px 20px; border: none; border-radius: 5px; background: #4ecdc4; color: #fff; cursor: pointer; }
+    .modal button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      background: #4ecdc4;
+      color: #fff;
+      cursor: pointer;
+    }
     
-    /* Inventario, tienda y otros se estructuran igual que antes */
+    /* TABS */
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .tab {
+      background: rgba(255,255,255,0.1);
+      border: 2px solid rgba(255,255,255,0.2);
+      color: #fff;
+      padding: 15px 30px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+    .tab:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(255,255,255,0.2); }
+    .tab.active { background: linear-gradient(45deg, #ff6b6b, #4ecdc4); border-color: #fff; box-shadow: 0 0 30px rgba(255,255,255,0.3); }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; text-align: center; }
+    
+    /* Estadísticas superior */
+    .stats-bar {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+    .stat {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 15px;
+      padding: 15px 25px;
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+    .stat-value { font-size: 1.5rem; font-weight: 700; color: #ffd700; }
+    .stat-label { font-size: 0.9rem; opacity: 0.8; }
+    
+    /* Sección Main: roll, animación, botones */
+    .roll-section {
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 25px;
+      padding: 40px;
+      margin-bottom: 30px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    }
+    .roll-animation {
+      width: 300px;
+      height: 200px;
+      margin: 30px auto;
+      background: rgba(0,0,0,0.3);
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border: 2px solid rgba(255,255,255,0.2);
+      position: relative;
+      overflow: hidden;
+    }
+    .aura-name {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      text-shadow: 0 0 20px currentColor;
+    }
+    .aura-rarity {
+      font-size: 1rem;
+      opacity: 0.9;
+      padding: 5px 15px;
+      border-radius: 15px;
+      background: rgba(255,255,255,0.1);
+    }
+    
+    .roll-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin: 30px 0;
+      flex-wrap: wrap;
+    }
+    .btn {
+      background: linear-gradient(45deg, #667eea, #764ba2);
+      border: none;
+      color: white;
+      padding: 15px 30px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 25px rgba(102,126,234,0.3);
+      position: relative;
+      overflow: hidden;
+    }
+    .btn:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(102,126,234,0.5); }
+    .btn:active { transform: translateY(0); }
+    
+    /* Botones específicos */
+    .btn-roll { background: linear-gradient(45deg, #ff6b6b, #ee5a24); box-shadow: 0 8px 25px rgba(255,107,107,0.3); }
+    .btn-auto { background: linear-gradient(45deg, #4ecdc4, #44a08d); box-shadow: 0 8px 25px rgba(78,205,196,0.3); }
+    .btn-quick { background: linear-gradient(45deg, #45b7d1, #2980b9); box-shadow: 0 8px 25px rgba(69,183,209,0.3); }
+    
+    /* Inventario, tienda y demás secciones */
     .shop-content, .inventory-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -175,7 +246,7 @@
     .shop-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 20px; color: #ffd700; }
     .item-price { color: #ffd700; font-weight: 700; }
     
-    /* Clases de rareza (la mayoría se usan para el inventario) */
+    /* Clases de rareza (y nuevas para boosters) */
     .rarity-common { border-color: #95a5a6; color: #95a5a6; }
     .rarity-rare { border-color: #3498db; color: #3498db; }
     .rarity-epic { border-color: #9b59b6; color: #9b59b6; }
@@ -185,16 +256,40 @@
     .rarity-celestial { border-color: #00cec9; color: #00cec9; }
     .rarity-transcendent { border-color: #6c5ce7; color: #6c5ce7; }
     .rarity-omnipotent { border-color: #ffd700; color: #ffd700; }
-    /* Nuevas rarezas */
     .rarity-ethereal { border-color: #a29bfe; color: #a29bfe; }
     .rarity-fabled { border-color: #fd79a8; color: #fd79a8; }
     .rarity-ascended { border-color: #55efc4; color: #55efc4; }
     .rarity-infinite { border-color: #ffeaa7; color: #ffeaa7; }
     
-    /* Animaciones de partículas y shake (igual que antes) */
-    .particles { position: absolute; width: 100%; height: 100%; overflow: hidden; }
+    /* Leaderboard sub-tabs */
+    .leaderboard-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+    .lboard-tab {
+      background: rgba(255,255,255,0.1);
+      border: 2px solid rgba(255,255,255,0.2);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: all 0.3s ease;
+    }
+    .lboard-tab.active { background: linear-gradient(45deg, #ff6b6b, #4ecdc4); border-color: #fff; }
+    
+    /* Animaciones de partículas y shake */
+    .particles {
+      position: absolute; width: 100%; height: 100%; overflow: hidden;
+    }
     .particle {
-      position: absolute; width: 4px; height: 4px; background: #ffd700; border-radius: 50%;
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: #ffd700;
+      border-radius: 50%;
       animation: particleFall 2s linear forwards;
     }
     @keyframes particleFall { to { transform: translateY(100vh); opacity: 0; } }
@@ -202,15 +297,15 @@
     @keyframes rollSpin { from { transform: rotateY(0deg); } to { transform: rotateY(360deg); } }
     
     @media (max-width: 768px) {
-      .title { font-size: 2rem; }
+      .header h1 { font-size: 2rem; }
       .stats-bar { flex-direction: column; align-items: center; }
       .roll-buttons { flex-direction: column; align-items: center; }
       .shop-content { grid-template-columns: 1fr; }
     }
     
-    /* Shake animation para efectos especiales */
+    /* Shake animation */
     @keyframes shake {
-      0%, 100% { transform: translateX(0); }
+      0%,100% { transform: translateX(0); }
       10%,30%,50%,70%,90% { transform: translateX(-5px); }
       20%,40%,60%,80% { transform: translateX(5px); }
     }
@@ -219,7 +314,7 @@
 <body>
   <div class="background-animation"></div>
   
-  <!-- Modal de Login - se muestra si el usuario no ha ingresado -->
+  <!-- Modal de Login -->
   <div class="modal" id="loginModal">
     <div class="modal-content">
       <h2>¡Bienvenido!</h2>
@@ -230,7 +325,7 @@
     </div>
   </div>
   
-  <button class="reset-btn" onclick="resetData()">Reset Data</button>
+  <button class="reset-btn" onclick="resetData()">RESET DATA</button>
   
   <div class="container">
     <div class="header">
@@ -249,12 +344,13 @@
           <div class="stat-label">🎲 Rolls</div>
         </div>
         <div class="stat">
+          <!-- Contador de auras MUY importante: ahora se muestra la cantidad de tipos únicos -->
           <div class="stat-value" id="auras-count">0</div>
           <div class="stat-label">✨ Auras</div>
         </div>
         <div class="stat">
           <div class="stat-value" id="prestigeLevel">0</div>
-          <div class="stat-label">🏆 Prestigio</div>
+          <div class="stat-label">🏆 Prestigios</div>
         </div>
       </div>
     </div>
@@ -265,7 +361,7 @@
       <img id="displayAvatar" src="" alt="Avatar" />
     </div>
     
-    <!-- Pestañas de navegación -->
+    <!-- Pestañas principales -->
     <div class="tabs">
       <button class="tab active" onclick="switchTab('main', event)">🎮 Main</button>
       <button class="tab" onclick="switchTab('shop', event)">🛒 Shop</button>
@@ -276,7 +372,7 @@
       <button class="tab" onclick="switchTab('codes', event)">🔑 Códigos</button>
     </div>
     
-    <!-- Contenido de cada pestaña -->
+    <!-- Contenido de pestañas -->
     <div id="main-tab" class="tab-content active">
       <div class="main-content">
         <div class="roll-section">
@@ -297,11 +393,12 @@
       </div>
     </div>
     
-    <!-- Shop: Se muestran mejoras de suerte y pociones (se han eliminado las que pediste borrar y se añaden nuevas) -->
+    <!-- Tienda (Shop) -->
     <div id="shop-tab" class="tab-content">
       <div class="shop-content">
         <div class="shop-section">
           <h2 class="shop-title">🍀 Mejoras de Suerte (Permanentes)</h2>
+          <!-- Booster original -->
           <div class="shop-item">
             <div class="item-info">
               <h3>Amuleto Básico</h3>
@@ -312,6 +409,7 @@
               <button class="btn" onclick="buyLuckUpgrade(0.1, 1000)">Comprar</button>
             </div>
           </div>
+          <!-- Booster nuevo -->
           <div class="shop-item">
             <div class="item-info">
               <h3>Trébol Dorado</h3>
@@ -322,17 +420,28 @@
               <button class="btn" onclick="buyLuckUpgrade(0.5, 5000)">Comprar</button>
             </div>
           </div>
+          <!-- Booster nuevo -->
           <div class="shop-item">
             <div class="item-info">
-              <h3>Herradura Mítica</h3>
-              <p>+1.0x Suerte</p>
+              <h3>Piedra de la Fortuna</h3>
+              <p>+1.0x Suerte adicional</p>
             </div>
             <div>
-              <div class="item-price">15,000 monedas</div>
-              <button class="btn" onclick="buyLuckUpgrade(1.0, 15000)">Comprar</button>
+              <div class="item-price">10,000 monedas</div>
+              <button class="btn" onclick="buyLuckUpgrade(1.0, 10000)">Comprar</button>
             </div>
           </div>
-          <!-- Otras mejoras se pueden añadir -->
+          <!-- Booster extra de alta gama -->
+          <div class="shop-item">
+            <div class="item-info">
+              <h3>Amuleto Legendario</h3>
+              <p>+2.0x Suerte permanente</p>
+            </div>
+            <div>
+              <div class="item-price">50,000 monedas</div>
+              <button class="btn" onclick="buyLuckUpgrade(2.0, 50000)">Comprar</button>
+            </div>
+          </div>
         </div>
         
         <div class="shop-section">
@@ -357,7 +466,7 @@
               <button class="btn" onclick="buyPotion(5,30000,2000)">Comprar</button>
             </div>
           </div>
-          <!-- Nueva sección de pociones OP de un solo uso -->
+          <!-- Poción de un solo uso -->
           <div class="shop-item">
             <div class="item-info">
               <h3>Poción OP Instantánea</h3>
@@ -366,6 +475,17 @@
             <div>
               <div class="item-price">3,000 monedas</div>
               <button class="btn" onclick="buyOneUsePotion(10,15000,3000)">Comprar</button>
+            </div>
+          </div>
+          <!-- Booster temporal nuevo -->
+          <div class="shop-item">
+            <div class="item-info">
+              <h3>Bendición Celestial</h3>
+              <p>+7.0x Suerte por 20 segundos</p>
+            </div>
+            <div>
+              <div class="item-price">4,000 monedas</div>
+              <button class="btn" onclick="buyPotion(7,20000,4000)">Comprar</button>
             </div>
           </div>
         </div>
@@ -377,37 +497,43 @@
       <div class="shop-section">
         <h2 class="shop-title">📦 Tu Inventario de Auras</h2>
         <div class="inventory-grid" id="inventoryGrid">
-          <p style="text-align: center; opacity: 0.7; grid-column: 1/-1;">
+          <p style="text-align:center; opacity:0.7; grid-column:1/-1;">
             Tu inventario está vacío. ¡Haz algunos rolls para conseguir auras!
           </p>
         </div>
       </div>
     </div>
     
-    <!-- Pestaña de Prestigio -->
+    <!-- Prestigio -->
     <div id="prestige-tab" class="tab-content">
       <h2>Prestigio</h2>
       <p>Prestigio acumulado: <span id="prestigeDisplay">0</span></p>
+      <p>Requiere al menos 10,000 monedas para prestigiar.</p>
       <button class="btn" onclick="prestigeGame()">Prestigiar (Reinicia a cambio de bono de suerte)</button>
     </div>
     
-    <!-- Pestaña de Logros -->
+    <!-- Logros -->
     <div id="achievements-tab" class="tab-content">
       <h2>🎖️ Logros</h2>
-      <div id="achievementsList">
-        <p>No has conseguido logros aún.</p>
+      <div id="achievementsList" style="display:flex; flex-wrap:wrap; gap:20px; justify-content:center;">
+        <!-- Aquí se mostrarán los logros con su UI -->
       </div>
     </div>
     
-    <!-- Pestaña de Leaderboard -->
+    <!-- Leaderboard -->
     <div id="leaderboard-tab" class="tab-content">
       <h2>📊 Leaderboard</h2>
-      <div id="leaderboardList">
-        <p>No hay datos aún.</p>
+      <div class="leaderboard-tabs">
+        <button class="lboard-tab active" onclick="switchLeaderboard('rare', event)">Más Raro</button>
+        <button class="lboard-tab" onclick="switchLeaderboard('prestige', event)">Más Prestigios</button>
+        <button class="lboard-tab" onclick="switchLeaderboard('rolls', event)">Más Rolls</button>
+      </div>
+      <div id="leaderboardContent">
+        <!-- Aquí se cargará la tabla acorde al criterio seleccionado -->
       </div>
     </div>
     
-    <!-- Pestaña de Códigos -->
+    <!-- Códigos -->
     <div id="codes-tab" class="tab-content">
       <h2>🔑 Canjear Código</h2>
       <input type="text" id="codeInput" placeholder="Ingresa tu código" />
@@ -417,7 +543,7 @@
   </div>
   
   <!-- Overlay para animaciones especiales -->
-  <div class="animation-overlay" id="animationOverlay" style="display: none;">
+  <div class="animation-overlay" id="animationOverlay" style="display:none;">
     <div class="particles" id="particles"></div>
   </div>
   
@@ -433,21 +559,125 @@
       autoRollActive: false,
       autoRollInterval: null,
       prestige: 0,
-      achievements: [],
-      codesRedeemed: [],
-      potionActive: false,
-      potionMultiplier: 0,
-      potionEndTime: 0,
-      oneUsePotions: 0,
       username: null,
       avatar: null,
-      bestAura: 0  // para leaderboard
+      bestAura: 0, // Valor máximo de aura obtenida
+      oneUsePotions: 0,
+      codesRedeemed: [],
+      achievementsClaimed: {} // Para llevar el control de logros reclamados
     };
     
+    // Datos de logros (ejemplo)
+    const achievementData = [
+      { id: "roll1", name: "Primer Roll", condition: () => gameState.totalRolls >= 1, reward: "Bonus: +0.05 suerte" },
+      { id: "roll10", name: "10 Rolls Realizados", condition: () => gameState.totalRolls >= 10, reward: "Bonus: +0.1 suerte" },
+      { id: "legendAura", name: "Aura Legendaria", condition: () => gameState.bestAura >= 100000, reward: "Bonus: +0.2 suerte" },
+      { id: "collection50", name: "Coleccionista: 50 auras", condition: () => {
+          const unique = {};
+          gameState.auras.forEach(aura => { unique[aura.name + "-" + aura.rarity] = true; });
+          return Object.keys(unique).length >= 50;
+        }, reward: "Bonus: +0.3 suerte" }
+    ];
+    
     //////////////////////////////
-    // Auras y rarezas
+    // Sonidos y animaciones
     //////////////////////////////
-    // Auras originales y luego se añaden 4 nuevas rarezas
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    function playSound(frequency, duration, type = 'sine') {
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+      oscillator.frequency.value = frequency;
+      oscillator.type = type;
+      gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
+      oscillator.start(audioContext.currentTime);
+      oscillator.stop(audioContext.currentTime + duration);
+    }
+    
+    //////////////////////////////
+    // Guardado y Carga (con localStorage)
+    //////////////////////////////
+    function saveGame() {
+      localStorage.setItem("auraGameSave", JSON.stringify(gameState));
+      updateGlobalLeaderboard();
+    }
+    function loadGame() {
+      const saveData = localStorage.getItem("auraGameSave");
+      if(saveData) {
+        try {
+          const loaded = JSON.parse(saveData);
+          gameState = { ...gameState, ...loaded };
+          updateUI();
+          updateInventory();
+          updateAchievements();
+          updateGlobalLeaderboard();
+          if(gameState.username) {
+            document.getElementById("loginModal").style.display = "none";
+            document.getElementById("userInfo").style.display = "block";
+            document.getElementById("displayUsername").textContent = gameState.username;
+            if(gameState.avatar) {
+              document.getElementById("displayAvatar").src = gameState.avatar;
+            }
+          }
+        } catch(e) { console.error("Error al cargar el save."); }
+      }
+    }
+    setInterval(saveGame, 30000);
+    
+    //////////////////////////////
+    // Login y Reset Data
+    //////////////////////////////
+    function loginUser() {
+      const username = document.getElementById("usernameInput").value.trim();
+      const avatarFile = document.getElementById("avatarInput").files[0];
+      if(!username) { alert("Ingresa un nombre de usuario."); return; }
+      gameState.username = username;
+      if(avatarFile) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          gameState.avatar = e.target.result;
+          document.getElementById("displayAvatar").src = gameState.avatar;
+          finalizeLogin();
+        };
+        reader.readAsDataURL(avatarFile);
+      } else { finalizeLogin(); }
+    }
+    function finalizeLogin() {
+      document.getElementById("loginModal").style.display = "none";
+      document.getElementById("userInfo").style.display = "block";
+      document.getElementById("displayUsername").textContent = gameState.username;
+      saveGame();
+    }
+    // El reset borra TODA la data incluyendo el registro (localStorage.clear())
+    function resetData() {
+      if(confirm("¿Estás seguro de reiniciar todos los datos? Esta acción borrará toda la cuenta.")) {
+        localStorage.clear();
+        location.reload();
+      }
+    }
+    
+    //////////////////////////////
+    // Actualiza la UI superior (estadísticas)
+    //////////////////////////////
+    function updateUI() {
+      document.getElementById("coins").textContent = gameState.coins.toLocaleString();
+      document.getElementById("luck").textContent = getTotalLuck().toFixed(1) + "x";
+      document.getElementById("rolls").textContent = gameState.totalRolls.toLocaleString();
+      // Contador de auras: cantidad de tipos únicos
+      const unique = {};
+      gameState.auras.forEach(aura => { unique[aura.name + "-" + aura.rarity] = true; });
+      document.getElementById("auras-count").textContent = Object.keys(unique).length;
+      document.getElementById("prestigeLevel").textContent = gameState.prestige;
+    }
+    function getTotalLuck() {
+      return gameState.luck;
+    }
+    
+    //////////////////////////////
+    // Definición de auras y sistema RNG
+    //////////////////////////////
     let auras = [
       // Common
       {name: "Brisa Común", rarity: "Common", minValue: 1, maxValue: 100, color: "#95a5a6", chance: 40},
@@ -476,7 +706,7 @@
       // Omnipotent
       {name: "DIOS SUPREMO", rarity: "Omnipotent", minValue: 10000000001, maxValue: 100000000000, color: "#ffd700", chance: 0.01},
       {name: "CREADOR UNIVERSAL", rarity: "Omnipotent", minValue: 10000000001, maxValue: 100000000000, color: "#ffd700", chance: 0.005},
-      // Nuevas rarezas agregadas
+      // Nuevas rarezas
       {name: "Esencia Etérea", rarity: "Ethereal", minValue: 100000000001, maxValue: 1000000000000, color: "#a29bfe", chance: 0.002},
       {name: "Luz Etérea", rarity: "Ethereal", minValue: 100000000001, maxValue: 1000000000000, color: "#a29bfe", chance: 0.0015},
       {name: "Susurro Fabuloso", rarity: "Fabled", minValue: 1000000000001, maxValue: 10000000000000, color: "#fd79a8", chance: 0.001},
@@ -487,116 +717,8 @@
       {name: "Eternidad", rarity: "Infinite", minValue: 100000000000001, maxValue: 1000000000000000, color: "#ffeaa7", chance: 0.0001}
     ];
     
-    //////////////////////////////
-    // Sonidos y animaciones
-    //////////////////////////////
-    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    function playSound(frequency, duration, type = 'sine') {
-      const oscillator = audioContext.createOscillator();
-      const gainNode = audioContext.createGain();
-      oscillator.connect(gainNode);
-      gainNode.connect(audioContext.destination);
-      oscillator.frequency.value = frequency;
-      oscillator.type = type;
-      gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
-      oscillator.start(audioContext.currentTime);
-      oscillator.stop(audioContext.currentTime + duration);
-    }
-    
-    //////////////////////////////
-    // Funciones de Guardado y Carga (con localStorage)
-    //////////////////////////////
-    function saveGame() {
-      localStorage.setItem("auraGameSave", JSON.stringify(gameState));
-      updateLeaderboard(); // Actualiza leaderboard si corresponde
-    }
-    
-    function loadGame() {
-      const saveData = localStorage.getItem("auraGameSave");
-      if (saveData) {
-        try {
-          let loaded = JSON.parse(saveData);
-          gameState = { ...gameState, ...loaded };
-          updateUI();
-          updateInventory();
-          updateAchievements();
-          updateLeaderboard();
-          // Si ya habías ingresado, oculta el login
-          if (gameState.username) {
-            document.getElementById("loginModal").style.display = "none";
-            document.getElementById("userInfo").style.display = "block";
-            document.getElementById("displayUsername").textContent = gameState.username;
-            if (gameState.avatar) { document.getElementById("displayAvatar").src = gameState.avatar; }
-          }
-        } catch(e) {
-          console.error("Error al cargar el save.");
-        }
-      }
-    }
-    
-    // Auto-save cada 30 segundos
-    setInterval(saveGame, 30000);
-    
-    //////////////////////////////
-    // Login y Reset Data
-    //////////////////////////////
-    function loginUser() {
-      const username = document.getElementById("usernameInput").value.trim();
-      const avatarFile = document.getElementById("avatarInput").files[0];
-      if (!username) { alert("Ingresa un nombre de usuario."); return; }
-      gameState.username = username;
-      if (avatarFile) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          gameState.avatar = e.target.result;
-          document.getElementById("displayAvatar").src = gameState.avatar;
-          finalizeLogin();
-        };
-        reader.readAsDataURL(avatarFile);
-      } else {
-        finalizeLogin();
-      }
-    }
-    
-    function finalizeLogin() {
-      document.getElementById("loginModal").style.display = "none";
-      document.getElementById("userInfo").style.display = "block";
-      document.getElementById("displayUsername").textContent = gameState.username;
-      saveGame();
-    }
-    
-    function resetData() {
-      if(confirm("¿Estás seguro de reiniciar todos los datos?")) {
-        localStorage.removeItem("auraGameSave");
-        location.reload();
-      }
-    }
-    
-    //////////////////////////////
-    // Actualización de UI
-    //////////////////////////////
-    function updateUI() {
-      document.getElementById("coins").textContent = gameState.coins.toLocaleString();
-      document.getElementById("luck").textContent = getTotalLuck().toFixed(1) + "x";
-      document.getElementById("rolls").textContent = gameState.totalRolls.toLocaleString();
-      document.getElementById("auras-count").textContent = gameState.auras.length.toLocaleString();
-      document.getElementById("prestigeLevel").textContent = gameState.prestige;
-    }
-    
-    function getTotalLuck() {
-      let total = gameState.luck;
-      if (gameState.potionActive && Date.now() < gameState.potionEndTime) {
-        total += gameState.potionMultiplier;
-      }
-      return total;
-    }
-    
-    //////////////////////////////
-    // Sistema RNG mejorado
-    //////////////////////////////
     function roll() {
-      if (gameState.coins < 50) {
+      if(gameState.coins < 50) {
         playSound(200, 0.3);
         alert("¡No tienes suficientes monedas!");
         return;
@@ -615,33 +737,27 @@
     }
     
     function performRoll() {
-      const totalLuck = getTotalLuck();
-      // Ajuste de chance de forma lineal con la suerte
-      let weightedAuras = auras.map(aura => ({
-        ...aura,
-        adjustedChance: aura.chance * totalLuck
-      }));
+      // Multiplica el chance base por la suerte (lineal)
+      const weightedAuras = auras.map(aura => ({ ...aura, adjustedChance: aura.chance * getTotalLuck() }));
       const totalWeight = weightedAuras.reduce((sum, aura) => sum + aura.adjustedChance, 0);
       let random = Math.random() * totalWeight;
-      for (let aura of weightedAuras) {
+      for(const aura of weightedAuras) {
         random -= aura.adjustedChance;
-        if (random <= 0) {
+        if(random <= 0) {
           const value = Math.floor(Math.random() * (aura.maxValue - aura.minValue + 1)) + aura.minValue;
-          const newAura = { ...aura, value: value, id: Date.now() + Math.random() };
+          const newAura = { ...aura, value, id: Date.now() + Math.random() };
           gameState.auras.push(newAura);
-          // Recompensa por el roll según el valor
-          gameState.coins += Math.floor(value / 10);
-          // Actualiza bestAura para leaderboard
-          if (value > gameState.bestAura) { gameState.bestAura = value; }
+          gameState.coins += Math.floor(value/10);
+          if(value > gameState.bestAura) { gameState.bestAura = value; }
           return newAura;
         }
       }
       // Fallback
       const fallback = weightedAuras[0];
       const value = Math.floor(Math.random() * (fallback.maxValue - fallback.minValue + 1)) + fallback.minValue;
-      const newAura = { ...fallback, value: value, id: Date.now() + Math.random() };
+      const newAura = { ...fallback, value, id: Date.now() + Math.random() };
       gameState.auras.push(newAura);
-      gameState.coins += Math.floor(value / 10);
+      gameState.coins += Math.floor(value/10);
       return newAura;
     }
     
@@ -653,26 +769,14 @@
       auraRarity.textContent = `${aura.rarity} - Valor: ${aura.value.toLocaleString()}`;
       auraRarity.style.backgroundColor = aura.color + "20";
       auraRarity.style.borderColor = aura.color;
-      
-      // Animaciones en función del valor
-      if(aura.value >= 1000000000) {
-        triggerSpecialAnimation(aura);
-        playSound(800,2,"sawtooth");
-      } else if(aura.value >= 100000000) {
-        triggerUltraAnimation(aura);
-        playSound(700,1.5,"square");
-      } else if(aura.value >= 1000000) {
-        triggerMegaAnimation(aura);
-        playSound(600,1,"triangle");
-      } else if(aura.value >= 100000) {
-        triggerAnimation(aura);
-        playSound(500,0.8);
-      } else if(aura.value >= 10000) {
-        triggerBasicAnimation(aura);
-        playSound(450,0.5);
-      }
+      // Activar animaciones en función del valor obtenido
+      if(aura.value >= 1000000000) { triggerSpecialAnimation(aura); playSound(800,2,"sawtooth"); }
+      else if(aura.value >= 100000000) { triggerUltraAnimation(aura); playSound(700,1.5,"square"); }
+      else if(aura.value >= 1000000) { triggerMegaAnimation(aura); playSound(600,1,"triangle"); }
+      else if(aura.value >= 100000) { triggerAnimation(aura); playSound(500,0.8); }
+      else if(aura.value >= 10000) { triggerBasicAnimation(aura); playSound(450,0.5); }
       updateInventory();
-      updateLeaderboard();
+      updateGlobalLeaderboard();
     }
     
     function triggerBasicAnimation(aura) { createParticles(20, aura.color); }
@@ -691,8 +795,7 @@
         <div class="mega-animation" style="color: ${aura.color}; text-shadow: 0 0 50px ${aura.color};">
           ✨ ${aura.name.toUpperCase()} ✨
           <div style="font-size: 2rem; margin-top: 20px;">MEGA RARE!</div>
-        </div>
-      `;
+        </div>`;
       overlay.style.display = "block";
       overlay.style.background = `radial-gradient(circle, ${aura.color}30, transparent 70%)`;
       setTimeout(() => { overlay.style.display = "none"; }, 3000);
@@ -707,14 +810,10 @@
           🌟 ${aura.name.toUpperCase()} 🌟
           <div style="font-size: 2.5rem; margin-top: 20px;">ULTRA LEGENDARY!</div>
           <div style="font-size: 1.5rem; margin-top: 10px;">Valor: ${aura.value.toLocaleString()}</div>
-        </div>
-      `;
+        </div>`;
       overlay.classList.add("ultra-animation");
       overlay.style.display = "block";
-      setTimeout(() => { 
-        overlay.style.display = "none"; 
-        overlay.classList.remove("ultra-animation"); 
-      }, 3000);
+      setTimeout(() => { overlay.style.display = "none"; overlay.classList.remove("ultra-animation"); }, 3000);
       document.body.style.animation = "shake 0.5s ease-in-out";
       setTimeout(() => { document.body.style.animation = ""; }, 500);
     }
@@ -728,21 +827,17 @@
           <div style="font-size: 3rem; margin-top: 20px;">GODLIKE!</div>
           <div style="font-size: 2rem; margin-top: 15px;">Valor: ${aura.value.toLocaleString()}</div>
           <div style="font-size: 1.2rem; margin-top: 10px;">¡IMPOSIBLE!</div>
-        </div>
-      `;
+        </div>`;
       overlay.classList.add("special-animation");
       overlay.style.display = "block";
-      setTimeout(() => { 
-        overlay.style.display = "none"; 
-        overlay.classList.remove("special-animation"); 
-      }, 4000);
+      setTimeout(() => { overlay.style.display = "none"; overlay.classList.remove("special-animation"); }, 4000);
       document.body.style.animation = "shake 2s ease-in-out";
       setTimeout(() => { document.body.style.animation = ""; }, 2000);
     }
     
     function createParticles(count, color) {
       const particles = document.getElementById("particles");
-      for (let i = 0; i < count; i++) {
+      for(let i = 0; i < count; i++) {
         const particle = document.createElement("div");
         particle.className = "particle";
         particle.style.left = Math.random() * 100 + "%";
@@ -755,7 +850,7 @@
     }
     
     function quickRoll() {
-      if (gameState.coins < 500) {
+      if(gameState.coins < 500) {
         playSound(200,0.3);
         alert("¡No tienes suficientes monedas para Quick Roll!");
         return;
@@ -765,7 +860,7 @@
       playSound(600,0.3,"square");
       document.getElementById("rollAnimation").classList.add("rolling");
       let results = [];
-      for (let i = 0; i < 10; i++) { results.push(performRoll()); }
+      for(let i = 0; i < 10; i++) { results.push(performRoll()); }
       setTimeout(() => {
         let bestResult = results.reduce((best, curr) => (curr.value > best.value ? curr : best));
         displayRollResult(bestResult);
@@ -776,7 +871,7 @@
     }
     
     function toggleAutoRoll() {
-      if(gameState.autoRollActive){ stopAutoRoll(); }
+      if(gameState.autoRollActive) { stopAutoRoll(); }
       else { startAutoRoll(); }
     }
     
@@ -836,7 +931,6 @@
       } else { playSound(200,0.3); alert("¡No tienes suficientes monedas!"); }
     }
     
-    // Compra de poción de un solo uso (OP)
     function buyOneUsePotion(multiplier, duration, cost) {
       if(gameState.coins >= cost) {
         gameState.coins -= cost;
@@ -848,71 +942,132 @@
     }
     
     //////////////////////////////
-    // Prestigio y Logros
+    // Prestigio: requiere al menos 10,000 monedas
     //////////////////////////////
     function prestigeGame() {
+      if(gameState.coins < 10000) {
+        alert("Necesitas al menos 10,000 monedas para prestigiar.");
+        return;
+      }
       if(confirm("Prestigiar reiniciará tu progreso a cambio de un bono permanente de suerte. ¿Continuar?")) {
         gameState.prestige++;
-        // Bono de suerte por cada prestigio
-        gameState.luck += 0.2;
-        // Reiniciar variables principales (excepto prestigio, username y avatar)
+        gameState.luck += 0.2; // bono permanente
         gameState.coins = 1000;
         gameState.totalRolls = 0;
         gameState.auras = [];
         gameState.bestAura = 0;
         updateUI();
         updateInventory();
-        alert(`¡Prestigio completado! Ahora tienes prestigio ${gameState.prestige} y +0.2 suerte permanente.`);
+        alert(`¡Prestigio completado! Prestigios: ${gameState.prestige} y +0.2 suerte permanente.`);
       }
     }
     
-    // Logros: ejemplo simple
+    //////////////////////////////
+    // Logros con UI interactiva
+    //////////////////////////////
     function updateAchievements() {
-      let achievements = [];
-      if(gameState.totalRolls >= 1) achievements.push("Primer Roll");
-      if(gameState.totalRolls >= 10) achievements.push("10 Rolls Realizados");
-      if(gameState.bestAura >= 100000) achievements.push("Aura Legendaria");
-      if(gameState.auras.length >= 50) achievements.push("Coleccionista: 50 auras");
-      gameState.achievements = achievements;
-      const list = document.getElementById("achievementsList");
-      if(achievements.length === 0) { list.innerHTML = "<p>No has conseguido logros aún.</p>"; }
-      else { list.innerHTML = achievements.map(a => `<p>${a}</p>`).join(''); }
+      const container = document.getElementById("achievementsList");
+      container.innerHTML = "";
+      achievementData.forEach(ach => {
+        const unlocked = ach.condition();
+        const claimed = gameState.achievementsClaimed[ach.id] || false;
+        const card = document.createElement("div");
+        card.style.border = "2px solid #4ecdc4";
+        card.style.borderRadius = "10px";
+        card.style.padding = "15px";
+        card.style.width = "200px";
+        card.style.textAlign = "center";
+        card.style.background = unlocked ? "#4ecdc4" : "#333";
+        card.style.opacity = unlocked ? "1" : "0.5";
+        card.innerHTML = `<h3>${ach.name}</h3>
+                          <p>${ach.reward}</p>
+                          <p>${unlocked ? "Desbloqueado" : "Bloqueado"}</p>`;
+        if(unlocked && !claimed) {
+          const claimBtn = document.createElement("button");
+          claimBtn.className = "btn";
+          claimBtn.textContent = "Reclamar";
+          claimBtn.onclick = () => claimAchievement(ach.id);
+          card.appendChild(claimBtn);
+        } else if(claimed) {
+          card.innerHTML += "<p>✔️ Reclamado</p>";
+        }
+        container.appendChild(card);
+      });
+    }
+    function claimAchievement(id) {
+      if(!gameState.achievementsClaimed[id]) {
+        gameState.achievementsClaimed[id] = true;
+        gameState.coins += 1000; // premio de ejemplo
+        updateUI();
+        updateAchievements();
+        alert("¡Logro reclamado! +1000 monedas.");
+      }
     }
     
     //////////////////////////////
-    // Leaderboard (guardado en localStorage)
+    // Leaderboard global (almacenado en localStorage)
     //////////////////////////////
-    function updateLeaderboard() {
+    function updateGlobalLeaderboard() {
       if(!gameState.username) return;
-      // Obtener leaderboard de localStorage
       let leaderboard = JSON.parse(localStorage.getItem("auraGameLeaderboard") || "[]");
-      // Actualiza o añade el usuario
       let found = leaderboard.find(u => u.username === gameState.username);
       if(found) {
         if(gameState.bestAura > found.bestAura) { found.bestAura = gameState.bestAura; }
+        if(gameState.prestige > found.prestige) { found.prestige = gameState.prestige; }
+        if(gameState.totalRolls > found.totalRolls) { found.totalRolls = gameState.totalRolls; }
       } else {
-        leaderboard.push({ username: gameState.username, avatar: gameState.avatar, bestAura: gameState.bestAura });
+        leaderboard.push({
+          username: gameState.username,
+          avatar: gameState.avatar,
+          bestAura: gameState.bestAura,
+          prestige: gameState.prestige,
+          totalRolls: gameState.totalRolls
+        });
       }
-      // Ordena por mejor aura
       leaderboard.sort((a,b) => b.bestAura - a.bestAura);
       localStorage.setItem("auraGameLeaderboard", JSON.stringify(leaderboard));
-      // Actualiza la UI
-      const board = document.getElementById("leaderboardList");
-      if(leaderboard.length === 0) { board.innerHTML = "<p>No hay datos aún.</p>"; }
-      else {
-        let html = "<table style='width:100%; color:#fff;'><tr><th>Usuario</th><th>Mejor Aura</th></tr>";
-        leaderboard.forEach(u => {
-          html += `<tr>
-                     <td style="display:flex; align-items:center; gap:10px;">
-                       ${u.avatar ? `<img src="${u.avatar}" style="width:30px; height:30px; border-radius:50%;" />` : ""}
-                       ${u.username}
-                     </td>
-                     <td>${u.bestAura.toLocaleString()}</td>
-                   </tr>`;
-        });
-        html += "</table>";
-        board.innerHTML = html;
+      // Si se está visualizando una de las sub-pestañas, refrescarla
+      const activeLTab = document.querySelector(".lboard-tab.active");
+      if(activeLTab) {
+        switchLeaderboard(activeLTab.getAttribute("data-type"));
       }
+    }
+    
+    // Sub-tabs para leaderboard
+    function switchLeaderboard(type, event) {
+      if(event) {
+        document.querySelectorAll(".lboard-tab").forEach(btn => btn.classList.remove("active"));
+        event.target.classList.add("active");
+      }
+      const leaderboard = JSON.parse(localStorage.getItem("auraGameLeaderboard") || "[]");
+      let sorted = [];
+      if(type === "rare") {
+        sorted = leaderboard.sort((a,b) => b.bestAura - a.bestAura);
+      } else if(type === "prestige") {
+        sorted = leaderboard.sort((a,b) => b.prestige - a.prestige);
+      } else if(type === "rolls") {
+        sorted = leaderboard.sort((a,b) => b.totalRolls - a.totalRolls);
+      }
+      const content = document.getElementById("leaderboardContent");
+      if(sorted.length === 0) { content.innerHTML = "<p>No hay datos aún.</p>"; return; }
+      let html = "<table style='width:100%; color:#fff;'><tr><th>Usuario</th>";
+      if(type === "rare") { html += "<th>Mejor Aura</th>"; }
+      if(type === "prestige") { html += "<th>Prestigios</th>"; }
+      if(type === "rolls") { html += "<th>Rolls</th>"; }
+      html += "</tr>";
+      sorted.forEach(u => {
+        html += `<tr>
+                    <td style="display:flex; align-items:center; gap:10px;">
+                      ${u.avatar ? `<img src="${u.avatar}" style="width:30px; height:30px; border-radius:50%;" />` : ""}
+                      ${u.username}
+                    </td>`;
+        if(type === "rare") { html += `<td>${u.bestAura.toLocaleString()}</td>`; }
+        if(type === "prestige") { html += `<td>${u.prestige}</td>`; }
+        if(type === "rolls") { html += `<td>${u.totalRolls}</td>`; }
+        html += "</tr>";
+      });
+      html += "</table>";
+      content.innerHTML = html;
     }
     
     //////////////////////////////
@@ -922,24 +1077,18 @@
       const code = document.getElementById("codeInput").value.trim();
       const messageDiv = document.getElementById("codeMessage");
       if(!code) { messageDiv.textContent = "Ingresa un código."; return; }
-      if(gameState.codesRedeemed.includes(code)) {
-        messageDiv.textContent = "Código ya utilizado.";
-        return;
-      }
+      if(gameState.codesRedeemed.includes(code)) { messageDiv.textContent = "Código ya utilizado."; return; }
       if(code === "Release") {
         gameState.coins += 5000;
         gameState.luck += 0.5;
         gameState.codesRedeemed.push(code);
         messageDiv.textContent = "Código 'Release' canjeado: +5000 monedas y +0.5 suerte.";
       } else if(code === "Test") {
-        // Código secreto, muy OP
         gameState.coins += 100000;
         gameState.luck += 5;
         gameState.codesRedeemed.push(code);
         messageDiv.textContent = "Código secreto 'Test' canjeado: ¡Recompensa OP activada!";
-      } else {
-        messageDiv.textContent = "Código inválido.";
-      }
+      } else { messageDiv.textContent = "Código inválido."; }
       updateUI();
       saveGame();
     }
@@ -956,51 +1105,18 @@
     }
     
     //////////////////////////////
-    // Añadir click sound a botones y pestañas
+    // Agregar click sound a botones y pestañas
     //////////////////////////////
     document.querySelectorAll('.btn, .tab').forEach(btn => {
       btn.addEventListener("click", () => { playSound(350,0.1); });
     });
     
-    //////////////////////////////
-    // Inicializaciones
-    //////////////////////////////
+    window.addEventListener("beforeunload", saveGame);
+    
     loadGame();
     updateUI();
     updateInventory();
     updateAchievements();
-    
-    function updateInventory() {
-      const inventoryGrid = document.getElementById("inventoryGrid");
-      if(gameState.auras.length === 0) {
-        inventoryGrid.innerHTML = '<p style="text-align:center; opacity:0.7; grid-column:1/-1;">Tu inventario está vacío. ¡Haz algunos rolls para conseguir auras!</p>';
-        return;
-      }
-      // Agrupar auras iguales
-      const grouped = {};
-      gameState.auras.forEach(aura => {
-        const key = aura.name + "-" + aura.rarity;
-        if(!grouped[key]) { grouped[key] = { ...aura, count: 0, totalValue: 0, bestValue: 0 }; }
-        grouped[key].count++;
-        grouped[key].totalValue += aura.value;
-        grouped[key].bestValue = Math.max(grouped[key].bestValue, aura.value);
-      });
-      const sorted = Object.values(grouped).sort((a,b) => b.bestValue - a.bestValue);
-      inventoryGrid.innerHTML = sorted.map(a => `
-        <div class="inventory-item rarity-${a.rarity.toLowerCase()}">
-          <h3>${a.name}</h3>
-          <p>${a.rarity}</p>
-          <p>Cantidad: ${a.count}</p>
-          <p>Mejor: ${a.bestValue.toLocaleString()}</p>
-          <p>Total: ${a.totalValue.toLocaleString()}</p>
-        </div>
-      `).join('');
-    }
-    
-    // Guarda la partida cuando se cierra la ventana
-    window.addEventListener("beforeunload", saveGame);
-    
-    console.log("🎮 Aura RNG Game Extended cargado! ¡Disfruta y sé muy afortunado!");
   </script>
 </body>
 </html>
