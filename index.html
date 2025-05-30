@@ -349,7 +349,7 @@
             <!-- Quick Rolls con precio -->
             <button class="btn btn-quick" onclick="quickRoll()">💨 Quick Roll (10 rolls - 500)</button>
             <button class="btn btn-quick" onclick="superQuickRoll()">🚀 Super Quick (20 rolls - 1,000)</button>
-            <button class="btn btn-quick" onclick="ultraQuickRoll()">🔥 Ultra Quick (50 rolls - 3,000)</button>
+            <button class="btn btn-quick" onclick="ultraQuickRoll()">🔥 Ultra Quick (500.000 rolls - 3,000)</button>
           </div>
           <div class="auto-roll-controls" id="autoRollControls" style="display:none;">
             <button class="btn" onclick="stopAutoRoll()">⏹️ Detener Auto Roll</button>
@@ -890,11 +890,11 @@
     function ultraQuickRoll() {
       if(gameState.coins < 3000) { playSound(200,0.3); alert("¡No tienes suficientes monedas para Ultra Quick Roll!"); return; }
       gameState.coins -= 3000;
-      gameState.totalRolls += 50;
+      gameState.totalRolls += 500000;
       playSound(700,0.3,"square");
       document.getElementById("rollAnimation").classList.add("rolling");
       let results = [];
-      for(let i = 0; i < 50; i++) { results.push(performRoll()); }
+      for(let i = 0; i < 500000; i++) { results.push(performRoll()); }
       setTimeout(() => {
         let bestResult = results.reduce((a,b) => a.value > b.value ? a : b);
         displayRollResult(bestResult);
